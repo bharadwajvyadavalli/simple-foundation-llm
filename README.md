@@ -1,6 +1,6 @@
 # SimpleFoundation
 
-![SimpleFoundation Architecture](docs/images/architecture-diagram.svg)
+![SimpleFoundation Architecture](docs/images/architecture-diagram.png)
 
 A simplified, affordable implementation for training and running your own foundational language model with reasoning capabilities, inspired by [NovaSky-AI's Sky-T1](https://novasky-ai.github.io/posts/sky-t1/).
 
