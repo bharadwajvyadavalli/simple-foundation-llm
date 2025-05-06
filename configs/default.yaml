@@ -1,0 +1,156 @@
+# Default configuration for SimpleFoundation
+
+# Data pipeline configuration
+data:
+  # Dataset paths
+  raw_dir: "data/raw"
+  generated_dir: "data/generated"
+  filtered_dir: "data/filtered"
+  formatted_dir: "data/formatted"
+
+  # Dataset collection settings
+  collect:
+    math_datasets: ["math", "aime"]
+    coding_datasets: ["apps"]
+
+  # Solution generation settings
+  generate:
+    model_name: "mistralai/Mistral-7B-Instruct-v0.2"  # Use a capable model for generation
+    math:
+      max_new_tokens: 1024
+      temperature: 0.7
+      top_p: 0.9
+    coding:
+      max_new_tokens: 2048  # Coding solutions tend to be longer
+      temperature: 0.8
+      top_p: 0.95
+
+  # Filtering settings
+  filter:
+    math:
+      correctness_threshold: 0.8  # If using probabilistic matching
+    coding:
+      test_timeout: 5  # Seconds
+
+  # Formatting settings
+  format:
+    prompt_templates:
+      math: |
+        You are a helpful AI math assistant. You excel at solving math problems by breaking them down into clear, logical steps.
+
+        Problem:
+        {problem}
+
+        Solve this problem step by step, showing your reasoning clearly.
+      coding: |
+        You are an expert coding assistant. You excel at solving programming problems with clear step-by-step reasoning.
+
+        Problem:
+        {problem}
+
+        Solve this coding problem step by step in Python, explaining your thought process and then providing the final working code.
+
+# Training configuration
+training:
+  # Model settings
+  model_name: "mistralai/Mistral-7B-v0.1"  # Base model to fine-tune
+  tokenizer_name: null  # Uses model_name if null
+  use_lora: true
+  load_in_8bit: false
+  load_in_4bit: true
+  
+  # LoRA settings
+  lora:
+    r: 16
+    alpha: 32
+    dropout: 0.05
+    target_modules: ["q_proj", "k_proj", "v_proj", "o_proj"]
+  
+  # Training hyperparameters
+  output_dir: "checkpoints"
+  max_seq_length: 2048
+  train_batch_size: 1
+  eval_batch_size: 1
+  gradient_accumulation_steps: 4
+  num_train_epochs: 3
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  warmup_ratio: 0.03
+  lr_scheduler_type: "cosine"
+  
+  # Optimization settings
+  fp16: true
+  bf16: false  # Only use on GPUs that support bfloat16
+  gradient_checkpointing: true
+  deepspeed_config: null  # Path to DeepSpeed config file
+  
+  # Logging and saving settings
+  log_every_n_steps: 10
+  eval_every_n_steps: 200
+  save_every_n_steps: 500
+  save_total_limit: 3
+  use_wandb: false
+  wandb_project: "SimpleFoundation"
+  wandb_name: null  # Auto-generated if null
+  
+  # Early stopping
+  early_stopping:
+    patience: 5
+    threshold: 0.01
+  
+  # Random seed
+  seed: 42
+
+# Evaluation configuration
+evaluation:
+  # Output settings
+  results_dir: "evaluation/results"
+  
+  # Model loading settings
+  load_in_8bit: false
+  load_in_4bit: true
+  use_flash_attention: true
+  
+  # Benchmark settings
+  benchmarks:
+    math:
+      - "evaluation/benchmarks/math_basic.json"
+      - "evaluation/benchmarks/aime_sample.json"
+    coding:
+      - "evaluation/benchmarks/coding_simple.json"
+  
+  # Generation settings
+  generation:
+    math:
+      max_new_tokens: 1024
+      temperature: 0.0  # Use greedy decoding for evaluation
+      top_p: 1.0
+    coding:
+      max_new_tokens: 2048
+      temperature: 0.7
+      top_p: 0.9
+
+# Inference configuration
+inference:
+  # Server settings
+  host: "0.0.0.0"
+  port: 8000
+  max_concurrent_requests: 1
+  
+  # Model loading settings
+  load_in_8bit: false
+  load_in_4bit: true
+  use_flash_attention: true
+  
+  # Generation defaults
+  default_max_new_tokens: 1024
+  default_temperature: 0.7
+  default_top_p: 0.9
+  default_top_k: 50
+  default_repetition_penalty: 1.1
+
+# Demo UI configuration
+demo:
+  api_url: "http://localhost:8000"
+  title: "SimpleFoundation Demo"
+  description: "Explore your trained foundation model"
