@@ -4,8 +4,6 @@
 
 The inference module in SimpleFoundation provides tools for deploying and serving trained models. This module enables you to use your model for real-world applications, interact with it through a web interface, and integrate it into other systems.
 
-![Inference Architecture](../images/architecture.png)
-
 ## Key Components
 
 ### Model Server

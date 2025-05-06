@@ -4,8 +4,6 @@
 
 The evaluation module in SimpleFoundation provides a comprehensive framework for assessing the performance of trained models on reasoning tasks. This module helps you quantify model improvements, conduct ablation studies, and generate detailed reports on model capabilities.
 
-![Evaluation Architecture](../images/architecture.png)
-
 ## Key Components
 
 ### Benchmark Evaluator

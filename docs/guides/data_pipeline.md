@@ -4,8 +4,6 @@
 
 The data pipeline in SimpleFoundation handles the collection, generation, filtering, and formatting of training data. This critical component ensures that we have high-quality examples that teach the model how to solve reasoning problems step-by-step.
 
-![Data Pipeline Architecture](../images/architecture.png)
-
 ## Pipeline Stages
 
 ### 1. Data Collection

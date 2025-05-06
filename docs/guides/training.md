@@ -4,8 +4,6 @@
 
 The training module in SimpleFoundation provides a framework for efficiently training language models with reasoning capabilities. It's designed to make the training process accessible on consumer-grade hardware through various optimization techniques.
 
-![Training Architecture](../images/architecture.png)
-
 ## Key Components
 
 ### Model Trainer
